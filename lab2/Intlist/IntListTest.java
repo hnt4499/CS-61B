@@ -75,6 +75,12 @@ public class IntListTest {
         assertEquals(IntList.of(1, 2, 3, 4, 5, 6), A);
     }
 
+    /** Tests for non-destructively iteratively catenate method, which cover:
+     * 1. A not null, B not null
+     * 2. A null, B not null
+     * 3. A null, B null
+     * 4. A not null, B null
+     */
     @Test
     public void testCatenateI1() {
         IntList A = IntList.of(1, 2, 3);

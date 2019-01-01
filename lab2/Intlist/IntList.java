@@ -134,9 +134,9 @@ public class IntList {
                 pointer = pointer.rest;
                 A = A.rest;
             }
-            if (B == null) {
+            if (B == null) {                    // A not null, B null
                 return res;
-            }
+            }                                   // A not null, B not null
             pointer.rest = new IntList(B.first, null);
             pointer = pointer.rest;
         }
