@@ -115,6 +115,36 @@ public class IntList {
         return A;
     }
 
+    /**
+     * Rewrite catenate iteratively
+     */
+    public static IntList catenateI(IntList A, IntList B) {
+        if (A == null) {
+            if (B == null) {
+                return null;
+            } else {
+                return new IntList(B.first, B.rest);
+            }
+        }
+        IntList res = new IntList(A.first, null);
+        IntList pointer = res;
+        A = A.rest;
+        while (A != null) {
+            pointer.rest = new IntList(A.first, null);
+            pointer = pointer.rest;
+            A = A.rest;
+        }
+        pointer.rest = new IntList(B.first, null);
+        pointer = pointer.rest;
+        B = B.rest;
+        while (B != null) {
+            pointer.rest = new IntList(B.first, null);
+            pointer = pointer.rest;
+            B = B.rest;
+        }
+        return res;
+    }
+
 
 
 
