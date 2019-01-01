@@ -103,6 +103,18 @@ public class IntList {
         return new IntList(A.first, catenate(A.rest, B));
     }
 
+    /**
+     * Rewrite dcatenate iteratively
+     */
+    public static IntList dcatenateI(IntList A, IntList B) {
+        IntList pointer = A;
+        while (pointer.rest != null) {
+            pointer = pointer.rest;
+        }
+        pointer.rest = B;
+        return A;
+    }
+
 
 
 
