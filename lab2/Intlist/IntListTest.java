@@ -101,4 +101,13 @@ public class IntListTest {
         assertEquals(exp, IntList.catenateI(A, B));
         assertNull(A);
     }
+
+    @Test
+    public void testCatenateI4() {
+        IntList A = IntList.of(1, 2, 3);
+        IntList B = null;
+        IntList exp = IntList.of(1, 2, 3);
+        assertEquals(exp, IntList.catenateI(A, B));
+        assertEquals(IntList.of(1, 2, 3), A);
+    }
 }
