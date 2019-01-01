@@ -5,7 +5,7 @@ import java.util.Formatter;
  * with a large number of additional methods.
  *
  * @author P. N. Hilfinger, with some modifications by Josh Hug and melaniecebula
- *         [Do not modify this file.]
+ * [Do not modify this file.]
  */
 public class IntList {
     /**
@@ -29,7 +29,7 @@ public class IntList {
      * A List with null rest, and first = 0.
      */
     public IntList() {
-    /* NOTE: public IntList () { }  would also work. */
+        /* NOTE: public IntList () { }  would also work. */
         this(0, null);
     }
 
@@ -119,23 +119,24 @@ public class IntList {
      * Rewrite catenate iteratively
      */
     public static IntList catenateI(IntList A, IntList B) {
-        if (A == null) {
-            if (B == null) {
-                return null;
-            } else {
-                return new IntList(B.first, B.rest);
-            }
-        }
-        IntList res = new IntList(A.first, null);
-        IntList pointer = res;
-        A = A.rest;
-        while (A != null) {
-            pointer.rest = new IntList(A.first, null);
-            pointer = pointer.rest;
+        IntList res; IntList pointer;
+        if (A == null && B == null) {
+            return null;
+        } else if (A == null) {
+            res = new IntList(B.first, null);
+            pointer = res;
+        } else {
+            res = new IntList(A.first, null);
+            pointer = res;
             A = A.rest;
+            while (A != null) {
+                pointer.rest = new IntList(A.first, null);
+                pointer = pointer.rest;
+                A = A.rest;
+            }
+            pointer.rest = new IntList(B.first, null);
+            pointer = pointer.rest;
         }
-        pointer.rest = new IntList(B.first, null);
-        pointer = pointer.rest;
         B = B.rest;
         while (B != null) {
             pointer.rest = new IntList(B.first, null);
@@ -144,20 +145,6 @@ public class IntList {
         }
         return res;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
