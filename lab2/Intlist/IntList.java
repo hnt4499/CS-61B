@@ -120,9 +120,9 @@ public class IntList {
      */
     public static IntList catenateI(IntList A, IntList B) {
         IntList res; IntList pointer;
-        if (A == null && B == null) {
+        if (A == null && B == null) {           // A null, B null
             return null;
-        } else if (A == null) {
+        } else if (A == null) {                 // A null, B not null
             res = new IntList(B.first, null);
             pointer = res;
         } else {
@@ -133,6 +133,9 @@ public class IntList {
                 pointer.rest = new IntList(A.first, null);
                 pointer = pointer.rest;
                 A = A.rest;
+            }
+            if (B == null) {
+                return res;
             }
             pointer.rest = new IntList(B.first, null);
             pointer = pointer.rest;
