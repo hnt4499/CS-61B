@@ -47,20 +47,17 @@ public class Planet {
 
     /** Calculate the NET force exerted by multiple bodies in x and y planes, respectively. */
     public double calcNetForceExertedByX(Planet[] p) {
-        double res = 0; int count = 0;
-        while (count < p.length) {
-            res += this.calcForceExertedByX(p[count]);
-            count ++;
+        double res = 0;
+        for (Planet planet : p) {
+            res += this.calcForceExertedByX(planet);
         }
         return res;
     }
 
     public double calcNetForceExertedByY(Planet[] p) {
         double res = 0;
-        int count = 0;
-        while (count < p.length) {
-            res += this.calcForceExertedByY(p[count]);
-            count++;
+        for (Planet planet : p) {
+            res += this.calcForceExertedByY(planet);
         }
         return res;
     }
