@@ -29,4 +29,13 @@ public class Planet {
     public double calcForceExertedBy(Planet p) {
         return G * p.mass * this.mass / Math.pow(this.calcDistance(p), 2);
     }
+
+    /** Calculate the force exerted by a body in x and y planes, respectively. */
+    public double calcForceExertedByX(Planet p) {
+        return this.calcForceExertedBy(p) * (p.xxPos - this.xxPos) / this.calcDistance(p);
+    }
+
+    public double calcForceExertedByY(Planet p) {
+        return this.calcForceExertedBy(p) * (p.yyPos - this.yyPos) / this.calcDistance(p);
+    }
 }
