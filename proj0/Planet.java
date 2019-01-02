@@ -62,6 +62,10 @@ public class Planet {
         return res;
     }
 
+    public void draw() {
+        StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
+    }
+
     /** Updates the velocity and position of body according to the forces and the time passed. */
     public void update(double time, double x, double y) {
         this.xxVel += time * x / this.mass;
