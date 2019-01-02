@@ -1,13 +1,17 @@
 public class NBody {
 
-    /** Reads the radius of the universe from the given text file. */
+    /**
+     * Reads the radius of the universe from the given text file.
+     */
     public static double readRadius(String fileLocation) {
         In in = new In(fileLocation);
         in.readInt();
         return in.readDouble();
     }
 
-    /** Reads and returns an array of Planets corresponding to the given text file */
+    /**
+     * Reads and returns an array of Planets corresponding to the given text file
+     */
     public static Planet[] readPlanets(String fileLocation) {
         In in = new In(fileLocation);
         int numberOfPlanets = in.readInt();
@@ -15,7 +19,7 @@ public class NBody {
         Planet[] planets = new Planet[numberOfPlanets];
 
         in.readDouble();
-        for (int i = 0; i < numberOfPlanets; i ++) {
+        for (int i = 0; i < numberOfPlanets; i++) {
             planets[i] = new Planet(in.readDouble(), in.readDouble(), in.readDouble(), in.readDouble(),
                     in.readDouble(), in.readString());
         }
@@ -60,6 +64,14 @@ public class NBody {
             /* Shows the canvas */
             StdDraw.show();
             StdDraw.pause(10);
+        }
+
+        StdOut.printf("%d\n", planets.length);
+        StdOut.printf("%.2e\n", radius);
+        for (int i = 0; i < planets.length; i++) {
+            StdOut.printf("%11.4e %11.4e %11.4e %11.4e %11.4e %12s\n",
+                    planets[i].xxPos, planets[i].yyPos, planets[i].xxVel,
+                    planets[i].yyVel, planets[i].mass, planets[i].imgFileName);
         }
     }
 }
