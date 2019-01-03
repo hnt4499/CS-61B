@@ -44,13 +44,63 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
         printDeque(sentinel.next);
+        System.out.println();
     }
 
-    private void printDeque(ObjectNode objectNode) {
+    private void printDeque(ObjectNode<T> objectNode) {
         if (objectNode.item == null) {
             return;
         }
         System.out.print(objectNode.item + " ");
         printDeque(objectNode.next);
+    }
+
+    public T removeFirst() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        ObjectNode<T> itemToReturn = sentinel.next;
+        sentinel.next.next.previous = sentinel;
+        sentinel.next = sentinel.next.next;
+        size --;
+        return itemToReturn.item;
+
+    }
+
+    public T removeLast() {
+        if (this.isEmpty()) {
+            return null;
+        }
+        ObjectNode<T> itemToReturn = sentinel.previous;
+        sentinel.previous.previous.next = sentinel;
+        sentinel.previous = sentinel.previous.previous;
+        size --;
+        return itemToReturn.item;
+    }
+
+    public T get(int index) {
+        if (index >= size) {
+            return null;
+        }
+        ObjectNode<T> pointer = sentinel.next;
+
+        for (int i = 0; i < index; i++) {
+            pointer = pointer.next;
+        }
+        return pointer.item;
+    }
+
+    public T getRecursive(int index) {
+        if (index >= size) {
+            return null;
+        }
+        return getRecursive(index, sentinel.next);
+    }
+
+    private T getRecursive(int index, ObjectNode pointer) {
+        if (index == 0) {
+            return (T) pointer.item;
+        }
+        return getRecursive(index - 1, pointer.next);
     }
 }
