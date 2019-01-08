@@ -20,6 +20,49 @@ public class ArrayDeque<T> {
         size = 1;
     }
 
+    public T[] getAll(T[] newArray) {
+        int count = 0;
+        if (nextFirst < nextLast) {
+            for (int i = nextFirst + 1; i < nextLast; i++) {
+                newArray[count] = items[i];
+                count ++;
+            }
+        } else {
+            for (int i = nextFirst + 1; i < items.length; i++) {
+                newArray[count] = items[i];
+                count ++;
+            }
+            for (int i = 0; i < nextLast; i++) {
+                newArray[count] = items[i];
+                count ++;
+            }
+        }
+        return newArray;
+    }
+
+    public void expand() {
+        int lastIndex = items.length * 2 - 1;
+        T[] newArray = (T[]) new Object[lastIndex + 1];
+        items = this.getAll(newArray);
+        nextFirst = lastIndex;
+        nextLast = size;
+    }
+
+    public void shorten() {
+        T[] newArray = (T[]) new Object[items.length / 2];
+        items = this.getAll(newArray);
+        nextFirst = items.length - 1;
+        nextLast = size;
+    }
+
+    public void checkSize() {
+        if (size >= items.length - 1) {
+            this.expand();
+        } else if (size <= items.length / 4 && items.length > 8) {
+            this.shorten();
+        }
+    }
+
     public void addFirst(T item) {
         items[nextFirst] = item;
         size++;
@@ -29,6 +72,7 @@ public class ArrayDeque<T> {
         } else {
             nextFirst--;
         }
+        checkSize();
     }
 
     public void addLast(T item) {
@@ -40,6 +84,7 @@ public class ArrayDeque<T> {
         } else {
             nextLast++;
         }
+        checkSize();
     }
 
     public boolean isEmpty() {
@@ -76,6 +121,7 @@ public class ArrayDeque<T> {
             nextFirst++;
         }
         size--;
+        checkSize();
         return items[nextFirst];
     }
 
@@ -89,6 +135,7 @@ public class ArrayDeque<T> {
             nextLast--;
         }
         size--;
+        checkSize();
         return items[nextLast];
     }
 

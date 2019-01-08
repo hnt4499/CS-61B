@@ -183,6 +183,123 @@ public class ArrayDequeTest {
         assertNull(test.get(5));
     }
 
+    @Test
+    public void getAll() {
+        ArrayDeque<String> test = new ArrayDeque<>("test");
+        String[] newArray = new String[1];
+        String[] expected = {"test"};
+        test.getAll(newArray);
+
+        assertArrayEquals(expected, newArray);
+
+    }
+
+    @Test
+    public void getAll1() {
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addLast("I");
+        test.addLast("love");
+        test.addLast("Vietnam");
+        test.addLast("very");
+        test.addLast("much");
+
+        String[] newArray = new String[8];
+        String[] expected = {"I", "love", "Vietnam", "very", "much", null, null, null};
+        test.getAll(newArray);
+
+        assertArrayEquals(expected, newArray);
+    }
+
+    @Test
+    public void expand() {
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addLast("I");
+        test.addLast("love");
+        test.addLast("Vietnam");
+        test.addLast("very");
+        test.addLast("very");
+        test.addLast("very");
+        test.addLast("much");
+
+        test.expand();
+
+        String[] newArray = {"I", "love", "Vietnam", "very", "very", "very", "much", null, null, null, null, null, null, null, null, null};
+        assertArrayEquals(newArray, test.items);
+        test.addLast("!");
+        test.addFirst("and");
+        test.addFirst("You");
+
+        test.printDeque();
+        String expected = "You and I love Vietnam very very very much ! \n";
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void shorten() {
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addLast("I");
+        test.addLast("love");
+        test.shorten();
+
+        String[] newArray = {"I", "love", null, null};
+        assertArrayEquals(newArray, test.items);
+
+        test.addLast("Vietnam");
+
+        test.printDeque();
+        String expected = "I love Vietnam \n";
+
+        assertEquals(expected, outContent.toString());
+    }
+
+    @Test
+    public void testCheckSize() { // Test resizing ability when expanding the array.
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addLast("I");
+        test.addLast("love");
+        test.addLast("Vietnam");
+        test.addLast("very");
+        test.addLast("very");
+        test.addLast("very");
+        test.addLast("very");
+        test.addLast("very"); // Expanding at this stage.
+        test.addLast("very");
+        test.addLast("much");
+
+
+        String[] newArray = {"I", "love", "Vietnam", "very", "very", "very", "very", "very", "very", "much", null, null, null, null, null, null};
+        assertArrayEquals(newArray, test.items);
+        test.addLast("!");
+        test.addFirst("and");
+        test.addFirst("You");
+
+        test.printDeque();
+        String expected = "You and I love Vietnam very very very very very very much ! \n";
+
+        assertEquals(expected, outContent.toString());
+        outContent.reset();
+
+        /**
+         * Test shortening the array.
+         */
+
+        for (int i = 0; i < 9; i++) {
+            test.removeLast();
+        }
+
+        String[] newArray1 = {"You", "and", "I", "love", null, null, null, null};
+        assertArrayEquals(newArray1, test.items);
+
+        test.addFirst("!");
+        test.addLast("Vietnam");
+
+        test.printDeque();
+        String expected1 = "! You and I love Vietnam \n";
+
+        assertEquals(expected1, outContent.toString());
+    }
+
 
 
 
