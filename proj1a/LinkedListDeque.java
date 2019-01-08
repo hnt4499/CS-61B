@@ -22,20 +22,21 @@ public class LinkedListDeque<T> {
         ObjectNode<T> newNode = new ObjectNode<>(item, sentinel, sentinel.next);
         sentinel.next.previous = newNode;
         sentinel.next = newNode;
-        size ++;
+        size++;
     }
-    
+
     public void addLast(T item) {
         ObjectNode<T> newNode = new ObjectNode<>(item, sentinel.previous, sentinel);
         sentinel.previous.next = newNode;
         sentinel.previous = newNode;
-        size ++;
+        size++;
     }
 
     public boolean isEmpty() {
         if (sentinel.next.item == null) {
             return true;
-        } return false;
+        }
+        return false;
     }
 
     public int size() {
@@ -62,7 +63,7 @@ public class LinkedListDeque<T> {
         ObjectNode<T> itemToReturn = sentinel.next;
         sentinel.next.next.previous = sentinel;
         sentinel.next = sentinel.next.next;
-        size --;
+        size--;
         return itemToReturn.item;
 
     }
@@ -74,7 +75,7 @@ public class LinkedListDeque<T> {
         ObjectNode<T> itemToReturn = sentinel.previous;
         sentinel.previous.previous.next = sentinel;
         sentinel.previous = sentinel.previous.previous;
-        size --;
+        size--;
         return itemToReturn.item;
     }
 

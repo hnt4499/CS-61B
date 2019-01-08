@@ -25,16 +25,16 @@ public class ArrayDeque<T> {
         if (nextFirst < nextLast) {
             for (int i = nextFirst + 1; i < nextLast; i++) {
                 newArray[count] = items[i];
-                count ++;
+                count++;
             }
         } else {
             for (int i = nextFirst + 1; i < items.length; i++) {
                 newArray[count] = items[i];
-                count ++;
+                count++;
             }
             for (int i = 0; i < nextLast; i++) {
                 newArray[count] = items[i];
-                count ++;
+                count++;
             }
         }
         return newArray;
