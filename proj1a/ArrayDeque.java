@@ -3,7 +3,7 @@ public class ArrayDeque<T> {
     private int size;
     private int nextFirst;
     private int nextLast;
-    public T[] items;
+    private T[] items;
 
     public ArrayDeque() {
         items = (T[]) new Object[8];
@@ -40,7 +40,7 @@ public class ArrayDeque<T> {
         return newArray;
     }
 
-    public void expand() {
+    private void expand() {
         int lastIndex = items.length * 2 - 1;
         T[] newArray = (T[]) new Object[lastIndex + 1];
         items = this.getAll(newArray);
@@ -48,14 +48,14 @@ public class ArrayDeque<T> {
         nextLast = size;
     }
 
-    public void shorten() {
+    private void shorten() {
         T[] newArray = (T[]) new Object[items.length / 2];
         items = this.getAll(newArray);
         nextFirst = items.length - 1;
         nextLast = size;
     }
 
-    public void checkSize() {
+    private void checkSize() {
         if (size >= items.length - 1) {
             this.expand();
         } else if (size <= items.length / 4 && items.length > 8) {
@@ -121,8 +121,9 @@ public class ArrayDeque<T> {
             nextFirst++;
         }
         size--;
+        T temp = items[nextFirst];
         checkSize();
-        return items[nextFirst];
+        return temp;
     }
 
     public T removeLast() {
@@ -135,8 +136,9 @@ public class ArrayDeque<T> {
             nextLast--;
         }
         size--;
+        T temp = items[nextLast];
         checkSize();
-        return items[nextLast];
+        return temp;
     }
 
     public T get(int index) {
@@ -151,5 +153,8 @@ public class ArrayDeque<T> {
         }
     }
 
-
+    /* Each time you want to get items, uncomment this */
+    /*private T[] getItems() {
+        return items;
+    }*/
 }
