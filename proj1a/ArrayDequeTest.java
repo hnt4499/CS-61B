@@ -11,7 +11,8 @@ public class ArrayDequeTest {
 
     @Test
     public void addFirst() {
-        ArrayDeque<String> test = new ArrayDeque<>("this");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("this");
         test.addFirst("is");
         String[] expected = {null, null, "is", "this", null, null, null, null};
         assertArrayEquals(expected, test.getItems());
@@ -19,7 +20,8 @@ public class ArrayDequeTest {
 
     @Test
     public void addFirst1() {
-        ArrayDeque<String> test = new ArrayDeque<>("much");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("much");
         test.addFirst("very");
         test.addFirst("Vietnam");
         test.addFirst("love");
@@ -30,7 +32,8 @@ public class ArrayDequeTest {
 
     @Test
     public void addLast() {
-        ArrayDeque<String> test = new ArrayDeque<>("this");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("this");
         test.addLast("is");
         String[] expected = {null, null, null, "this", "is", null, null, null};
         assertArrayEquals(expected, test.getItems());
@@ -38,7 +41,8 @@ public class ArrayDequeTest {
 
     @Test
     public void addLast1() {
-        ArrayDeque<String> test = new ArrayDeque<>("much");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("much");
         test.addLast("very");
         test.addLast("Vietnam");
         test.addLast("love");
@@ -55,13 +59,15 @@ public class ArrayDequeTest {
 
     @Test
     public void isEmpty1() {
-        ArrayDeque<String> test = new ArrayDeque<>("Vietnam");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("Vietnam");
         assertFalse(test.isEmpty());
     }
 
     @Test
     public void size() {
-        ArrayDeque<String> test = new ArrayDeque<>("this");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("this");
         test.addLast("is");
         int expected = 2;
         assertEquals(expected, test.size());
@@ -107,14 +113,16 @@ public class ArrayDequeTest {
 
     @Test
     public void removeFirst() {
-        ArrayDeque<String> test = new ArrayDeque<>("test");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("test");
         assertEquals("test", test.removeFirst());
         assertTrue(test.isEmpty());
     }
 
     @Test
     public void removeFirst1() {
-        ArrayDeque<String> test = new ArrayDeque<>("much");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("much");
         test.addFirst("very");
         test.addFirst("Vietnam");
         test.addFirst("love");
@@ -134,14 +142,16 @@ public class ArrayDequeTest {
 
     @Test
     public void removeLast() {
-        ArrayDeque<String> test = new ArrayDeque<>("test");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("test");
         assertEquals("test", test.removeLast());
         assertTrue(test.isEmpty());
     }
 
     @Test
     public void removeLast1() {
-        ArrayDeque<String> test = new ArrayDeque<>("much");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("much");
         test.addFirst("very");
         test.addFirst("Vietnam");
         test.addFirst("love");
@@ -161,7 +171,8 @@ public class ArrayDequeTest {
 
     @Test
     public void get() {
-        ArrayDeque<String> test = new ArrayDeque<>("test");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("test");
         assertEquals("test", test.get(0));
         assertNull(test.get(1));
         assertNull(test.get(100));
@@ -169,7 +180,8 @@ public class ArrayDequeTest {
 
     @Test
     public void get1() {
-        ArrayDeque<String> test = new ArrayDeque<>("much");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("much");
         test.addFirst("very");
         test.addFirst("Vietnam");
         test.addFirst("love");
@@ -182,7 +194,8 @@ public class ArrayDequeTest {
 
     @Test
     public void getAll() {
-        ArrayDeque<String> test = new ArrayDeque<>("test");
+        ArrayDeque<String> test = new ArrayDeque<>();
+        test.addFirst("test");
         String[] newArray = new String[1];
         String[] expected = {"test"};
         test.getAll(newArray);

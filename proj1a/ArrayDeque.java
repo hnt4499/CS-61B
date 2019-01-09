@@ -12,14 +12,6 @@ public class ArrayDeque<T> {
         size = 0;
     }
 
-    public ArrayDeque(T firstItem) {
-        items = (T[]) new Object[8];
-        items[3] = firstItem;
-        nextFirst = 2;
-        nextLast = 4;
-        size = 1;
-    }
-
     public T[] getAll(T[] newArray) {
         int count = 0;
         if (nextFirst < nextLast) {
@@ -154,7 +146,7 @@ public class ArrayDeque<T> {
     }
 
     /* Each time you want to get items, uncomment this */
-    /*private T[] getItems() {
+    /*public T[] getItems() {
         return items;
     }*/
 }
