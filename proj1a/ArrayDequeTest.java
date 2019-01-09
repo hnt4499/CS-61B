@@ -314,30 +314,30 @@ public class ArrayDequeTest {
 
     @Test
     public void moreTest() {
-        ArrayDeque<Integer> ArrayDeque = new ArrayDeque<>();
-        ArrayDeque.addFirst(0);
-         ArrayDeque.removeFirst();
-         ArrayDeque.addLast(2);
-         ArrayDeque.removeLast();
-         ArrayDeque.addLast(4);
-         ArrayDeque.removeFirst();
-         ArrayDeque.addFirst(6);
-         ArrayDeque.addLast(7);
-         ArrayDeque.addLast(8);
-         ArrayDeque.removeFirst();
-         ArrayDeque.removeLast();
-         ArrayDeque.addLast(11);
-         ArrayDeque.addLast(12);
-         ArrayDeque.get(2);
-         ArrayDeque.addLast(14);
-         ArrayDeque.removeLast();
-         ArrayDeque.addFirst(16);
-         ArrayDeque.addFirst(17);
-         ArrayDeque.addFirst(18);
-         ArrayDeque.addLast(19);
-         ArrayDeque.removeFirst();
-         ArrayDeque.removeFirst();
-         assertEquals(16, (long) ArrayDeque.removeFirst());
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+        arrayDeque.addFirst(0);
+        arrayDeque.removeFirst();
+        arrayDeque.addLast(2);
+        arrayDeque.removeLast();
+        arrayDeque.addLast(4);
+        arrayDeque.removeFirst();
+        arrayDeque.addFirst(6);
+        arrayDeque.addLast(7);
+        arrayDeque.addLast(8);
+        arrayDeque.removeFirst();
+        arrayDeque.removeLast();
+        arrayDeque.addLast(11);
+        arrayDeque.addLast(12);
+        arrayDeque.get(2);
+        arrayDeque.addLast(14);
+        arrayDeque.removeLast();
+        arrayDeque.addFirst(16);
+        arrayDeque.addFirst(17);
+        arrayDeque.addFirst(18);
+        arrayDeque.addLast(19);
+        arrayDeque.removeFirst();
+        arrayDeque.removeFirst();
+        assertEquals(16, (long) arrayDeque.removeFirst());
     }
 
 

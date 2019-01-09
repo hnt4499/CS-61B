@@ -12,7 +12,7 @@ public class ArrayDeque<T> {
         size = 0;
     }
 
-    public T[] getAll(T[] newArray) {
+    private T[] getAll(T[] newArray) {
         int count = 0;
         if (nextFirst < nextLast) {
             for (int i = nextFirst + 1; i < nextLast; i++) {
