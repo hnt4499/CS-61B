@@ -52,9 +52,9 @@ public class PalindromeFinder {
         /**
          * Prints the expected output.
          */
-        System.out.println("For N = " + maxSizeIndex +
-                " there are the most palindromes in English");
-        System.out.println("The longest offByN palindrome is " +
-                maxLength + " with N = " + maxLengthIndex);
+        System.out.println("For N = " + maxSizeIndex
+                + " there are the most palindromes in English");
+        System.out.println("The longest offByN palindrome is "
+                + maxLength + " with N = " + maxLengthIndex);
     }
 }
