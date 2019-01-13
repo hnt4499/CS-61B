@@ -10,7 +10,7 @@ public class Palindrome {
 
     public boolean isPalindrome(String word) {
         int length = word.length();
-        for (int i = 0; i < length/2; i += 1) {
+        for (int i = 0; i < length / 2; i += 1) {
             if (word.charAt(i) != word.charAt(length - 1 - i)) {
                 return false;
             }
@@ -32,5 +32,31 @@ public class Palindrome {
     public boolean isPalindrome2(String word) {
         Deque<Character> deque = wordToDeque(word);
         return isPalindrome2Helper(deque);
+    }
+
+    public boolean isPalindromeByOne(String word, CharacterComparator cc) {
+        int length = word.length();
+        for (int i = 0; i < length / 2; i += 1) {
+            if (!cc.equalChars(word.charAt(i), word.charAt(length - 1 - i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isPalindromeByOne2Helper(Deque<Character> deque, CharacterComparator cc) {
+        if (deque.size() < 2) {
+            return true;
+        }
+        if (cc.equalChars(deque.removeFirst(), deque.removeLast())) {
+            return isPalindromeByOne2Helper(deque, cc);
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isPalindromeByOne2(String word, CharacterComparator cc) {
+        Deque<Character> deque = wordToDeque(word);
+        return isPalindromeByOne2Helper(deque, cc);
     }
 }
