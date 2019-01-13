@@ -29,12 +29,12 @@ public class Palindrome {
         }
     }
 
-    public boolean isPalindrome2(String word) {
+    private boolean isPalindrome2(String word) {
         Deque<Character> deque = wordToDeque(word);
         return isPalindrome2Helper(deque);
     }
 
-    public boolean isPalindromeByOne(String word, CharacterComparator cc) {
+    private boolean isPalindromeByOne(String word, CharacterComparator cc) {
         int length = word.length();
         for (int i = 0; i < length / 2; i += 1) {
             if (!cc.equalChars(word.charAt(i), word.charAt(length - 1 - i))) {
@@ -55,16 +55,16 @@ public class Palindrome {
         }
     }
 
-    public boolean isPalindromeByOne2(String word, CharacterComparator cc) {
+    private boolean isPalindromeByOne2(String word, CharacterComparator cc) {
         Deque<Character> deque = wordToDeque(word);
         return isPalindromeByOne2Helper(deque, cc);
     }
 
-    public boolean isPalindromeByN(String word, int n) {
+    private boolean isPalindromeByN(String word, int n) {
         return this.isPalindromeByN(word, new OffByN(n));
     }
 
-    public boolean isPalindromeByN(String word, OffByN offByN) {
+    private boolean isPalindromeByN(String word, OffByN offByN) {
         int length = word.length();
         for (int i = 0; i < length / 2; i += 1) {
             if (!offByN.equalChars(word.charAt(i), word.charAt(length - 1 - i))) {
