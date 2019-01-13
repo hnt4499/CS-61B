@@ -59,4 +59,15 @@ public class Palindrome {
         Deque<Character> deque = wordToDeque(word);
         return isPalindromeByOne2Helper(deque, cc);
     }
+
+    public boolean isPalindromeByN(String word, int n) {
+        OffByN offByN = new OffByN(n);
+        int length = word.length();
+        for (int i = 0; i < length / 2; i += 1) {
+            if (!offByN.equalChars(word.charAt(i), word.charAt(length - 1 - i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

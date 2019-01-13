@@ -62,4 +62,15 @@ public class TestPalindrome {
         assertFalse(palindrome.isPalindromeByOne2("Ab", offByOne));
         assertFalse(palindrome.isPalindromeByOne2("abc", offByOne));
     }
+
+    @Test
+    public void testIsPalindromeByN() {
+        assertTrue(palindrome.isPalindromeByN("az", 25));
+        assertTrue(palindrome.isPalindromeByN("abc", 2));
+        assertTrue(palindrome.isPalindromeByN("flaqa", 5));
+        assertTrue(palindrome.isPalindromeByN("", 100));
+
+        assertFalse(palindrome.isPalindromeByN("flapa", 5));
+        assertFalse(palindrome.isPalindromeByN("aba", 2));
+    }
 }
