@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-
 /**
  * This class outputs all palindromes in the words file in the current directory.
  */
@@ -12,10 +10,10 @@ public class PalindromeFinder {
          * and offByN comparator,
          */
         OffByN[] offByN = new OffByN[26];
-        ArrayDeque<String>[] ByNDeque = new ArrayDeque[26];
+        ArrayDeque<String>[] byNDeque = new ArrayDeque[26];
         for (int i = 0; i < 26; i += 1) {
             offByN[i] = new OffByN(i);
-            ByNDeque[i] = new ArrayDeque<>();
+            byNDeque[i] = new ArrayDeque<>();
         }
         /* */
         int minLength = 4;
@@ -29,7 +27,7 @@ public class PalindromeFinder {
             if (word.length() >= minLength) {
                 for (int i = 0; i < 26; i += 1) {
                     if (palindrome.isPalindromeByN(word, offByN[i])) {
-                        ByNDeque[i].addFirst(word);
+                        byNDeque[i].addFirst(word);
                         if (word.length() > maxLength.length()) {
                             maxLength = word;
                             maxLengthIndex = i;
@@ -41,11 +39,12 @@ public class PalindromeFinder {
         }
 
         /**
-         * Finds the longest arrayDeque (in order to find N in which there are the most palindromes in English.
+         * Finds the longest arrayDeque (in order to
+         * find N in which there are the most palindromes in English.
          */
         int maxSizeIndex = 0;
         for (int i = 0; i < 26; i += 1) {
-            if (ByNDeque[i].size() > ByNDeque[maxSizeIndex].size()) {
+            if (byNDeque[i].size() > byNDeque[maxSizeIndex].size()) {
                 maxSizeIndex = i;
             }
         }
@@ -53,7 +52,9 @@ public class PalindromeFinder {
         /**
          * Prints the expected output.
          */
-        System.out.println("For N = " + maxSizeIndex + " there are the most palindromes in English");
-        System.out.println("The longest offByN palindrome is " + maxLength + " with N = " + maxLengthIndex);
+        System.out.println("For N = " + maxSizeIndex +
+                " there are the most palindromes in English");
+        System.out.println("The longest offByN palindrome is " +
+                maxLength + " with N = " + maxLengthIndex);
     }
 }
