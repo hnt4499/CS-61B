@@ -1,6 +1,8 @@
 import java.lang.reflect.Array;
 
-/** This class outputs all palindromes in the words file in the current directory. */
+/**
+ * This class outputs all palindromes in the words file in the current directory.
+ */
 public class PalindromeFinder {
 
     public static void main(String[] args) {
