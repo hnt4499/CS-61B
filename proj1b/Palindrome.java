@@ -34,7 +34,7 @@ public class Palindrome {
         return isPalindrome2Helper(deque);
     }
 
-    public boolean isPalindromeByOne(String word, CharacterComparator cc) {
+    public boolean isPalindrome(String word, CharacterComparator cc) {
         int length = word.length();
         for (int i = 0; i < length / 2; i += 1) {
             if (!cc.equalChars(word.charAt(i), word.charAt(length - 1 - i))) {

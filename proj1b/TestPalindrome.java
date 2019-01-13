@@ -43,14 +43,14 @@ public class TestPalindrome {
     }
 
     @Test
-    public void testIsPalindromeByOne() {
-        assertTrue(palindrome.isPalindromeByOne("a", offByOne));
-        assertTrue(palindrome.isPalindromeByOne("flake", offByOne));
-        assertTrue(palindrome.isPalindromeByOne("atwavub", offByOne));
-        assertTrue(palindrome.isPalindromeByOne("", offByOne));
+    public void testisPalindrome() {
+        assertTrue(palindrome.isPalindrome("a", offByOne));
+        assertTrue(palindrome.isPalindrome("flake", offByOne));
+        assertTrue(palindrome.isPalindrome("atwavub", offByOne));
+        assertTrue(palindrome.isPalindrome("", offByOne));
 
-        assertFalse(palindrome.isPalindromeByOne("Ab", offByOne));
-        assertFalse(palindrome.isPalindromeByOne("abc", offByOne));
+        assertFalse(palindrome.isPalindrome("Ab", offByOne));
+        assertFalse(palindrome.isPalindrome("abc", offByOne));
     }
 
     @Test
