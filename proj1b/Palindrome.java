@@ -61,7 +61,10 @@ public class Palindrome {
     }
 
     public boolean isPalindromeByN(String word, int n) {
-        OffByN offByN = new OffByN(n);
+        return this.isPalindromeByN(word, new OffByN(n));
+    }
+
+    public boolean isPalindromeByN(String word, OffByN offByN) {
         int length = word.length();
         for (int i = 0; i < length / 2; i += 1) {
             if (!offByN.equalChars(word.charAt(i), word.charAt(length - 1 - i))) {
