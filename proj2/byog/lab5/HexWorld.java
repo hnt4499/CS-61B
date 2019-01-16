@@ -1,5 +1,7 @@
 package byog.lab5;
+
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 import byog.TileEngine.TERenderer;
@@ -41,11 +43,72 @@ public class HexWorld {
 
         for (int i = 0; i < width; i += 1) {
             for (int j = 0; j < height; j += 1) {
-                if (arrays[i][j] == ' ') {
-                    tiles[xPosition + i][yPosition + j] = Tileset.NOTHING;
-                } else {
+                if (arrays[i][j] == 'a') {
                     tiles[xPosition + i][yPosition + j] = Tileset.FLOWER;
                 }
+            }
+        }
+    }
+
+    private static class Position {
+        int xPosition;
+        int yPosition;
+
+        public Position(int x, int y) {
+            xPosition = x;
+            yPosition = y;
+        }
+
+        public void clone(Position position) {
+            position.xPosition = this.xPosition;
+            position.yPosition = this.yPosition;
+        }
+
+    }
+
+    private static Position addHexagon(TETile[][] tiles, int length, Position position) {
+        addHexagon(tiles, length, position.xPosition, position.yPosition);
+
+        position.xPosition = position.xPosition - (length * 2 - 1);
+        position.yPosition = position.yPosition + length;
+
+        return position;
+    }
+
+    private static boolean checkPosition(TETile[][] tiles, Position position, int length) {
+        int x = position.xPosition;
+        int y = position.yPosition;
+
+        return !(x < 0 || x > (tiles.length + 2 - 3 * length)|| y < 0 || y > (tiles[0].length - 2 * length));
+    }
+
+    /**
+     * This method is to update the position for the upper-right new hexagon if that position is not out of bound.
+     * Otherwise, it will update the position for the above hexagon.
+     */
+    private static void updatePosition(TETile[][] tiles, Position position, int length) {
+        position.yPosition = position.yPosition + length;
+
+        int tempX = position.xPosition + (length * 2 - 1);
+        if (tempX <= (tiles[0].length - 2 * length)) {
+            position.xPosition = tempX;
+        }
+    }
+
+    public static void addMultiple(TETile[][] tiles, int length) {
+        int x = tiles.length / 2 + tiles.length % 2 - length - length % 2;
+        int y = (tiles[0].length % (length * 2)) / 2;
+
+        Position position = new Position(x, y);
+        Position tempPosition = new Position(x, y);
+
+        while (checkPosition(tiles, position, length)) {
+            addHexagon(tiles, length, position);
+            if (!checkPosition(tiles, position, length)) {
+                tempPosition.clone(position);
+
+                updatePosition(tiles, position, length);
+                position.clone(tempPosition);
             }
         }
     }
@@ -53,8 +116,8 @@ public class HexWorld {
     public static TETile[][] initializeTiles(int width, int height) {
         TETile[][] randomTiles = new TETile[width][height];
 
-        for (int x = 0; x < 50; x += 1) {
-            for (int y = 0; y < 50; y += 1) {
+        for (int x = 0; x < width; x += 1) {
+            for (int y = 0; y < height; y += 1) {
                 randomTiles[x][y] = Tileset.NOTHING;
             }
         }
@@ -68,7 +131,7 @@ public class HexWorld {
         ter.initialize(width, height);
 
         TETile[][] randomTiles = initializeTiles(width, height);
-        addHexagon(randomTiles, 4, 10, 10);
+        addMultiple(randomTiles, 3);
 
         ter.renderFrame(randomTiles);
     }
