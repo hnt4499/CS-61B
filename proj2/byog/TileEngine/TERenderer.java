@@ -84,8 +84,10 @@ public class TERenderer {
      * @param world the 2D TETile[][] array to render
      */
     public void renderFrame(TETile[][] world) {
-        int numXTiles = world.length;
-        int numYTiles = world[0].length;
+        renderFrame(world, world.length, world[0].length);
+    }
+
+    public void renderFrame(TETile[][] world, int numXTiles, int numYTiles) {
         StdDraw.clear(new Color(0, 0, 0));
         for (int x = 0; x < numXTiles; x += 1) {
             for (int y = 0; y < numYTiles; y += 1) {

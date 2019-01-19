@@ -3,22 +3,212 @@ package byog.Core;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+import edu.princeton.cs.introcs.StdDraw;
 
+import java.awt.*;
+import java.io.*;
+import java.util.LinkedList;
 import java.util.Random;
 
-public class Game {
-    TERenderer ter = new TERenderer();
+public class Game implements Serializable {
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
-    public static final int HEIGHT = 30;
-    
+    public static final int HEIGHT = 50;
+    private static final double CENTERX = (double) (WIDTH - 1) / 2;
+    private static final double CENTERY = (double) (HEIGHT - 1) / 2;
+
     private TETile[][] finalWorldFrame;
     private Position player; // This represents the position of the player.
+
+    private static final Font LARGE = new Font("Lucida Sans Italic", Font.PLAIN, 40);
+    private static final Font MEDIUM = new Font("Lucida Sans Regular", Font.PLAIN, 30);
+    private static final Font SMALL = new Font("Lucida Sans Regular", Font.PLAIN, 25);
+
+    private static final char[] NUMBERS = "0123456789".toCharArray();
+
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
      */
     public void playWithKeyboard() {
+        StdDraw.setCanvasSize(WIDTH * 16, HEIGHT * 16);
+        StdDraw.setFont(SMALL);
+        StdDraw.setXscale(0, WIDTH);
+        StdDraw.setYscale(0, HEIGHT);
+        StdDraw.clear(Color.BLACK);
+        StdDraw.enableDoubleBuffering();
+
+        mainMenu();
+    }
+
+    private void mainMenu() {
+        StdDraw.clear(Color.BLACK);
+        StdDraw.setPenColor(Color.WHITE);
+
+        draw(LARGE, CENTERX, (double) HEIGHT * 4 / 5, "CS61B: Tuyen's Project");
+
+        draw(SMALL, CENTERX, CENTERY + 2, "(N)ew Game");
+        draw(SMALL, CENTERX, CENTERY, "(L)oad Game");
+        draw(SMALL, CENTERX, CENTERY - 2, "(Q)uit");
+
+        StdDraw.show();
+        inputMainMenu();
+    }
+
+    private void inputMainMenu() {
+        while (true) {
+            if (StdDraw.hasNextKeyTyped()) {
+                char c = StdDraw.nextKeyTyped();
+                if (c == 'n' || c == 'N') {
+                    newGame();
+                } else if (c == 'l' || c == 'L') {
+                    if (load()) {
+                        drawGame();
+                        moveController();
+                    } else {
+                        mainMenu();
+                    }
+                }
+                return;
+            }
+        }
+    }
+
+    private void newGame() {
+        LinkedList<Character> linkedList = new LinkedList<>();
+        String seedString = enterSeed(linkedList, ' ');
+        finalWorldFrame = initializeGame(seedString, WIDTH, HEIGHT - 5);
+        drawGame();
+
+        moveController();
+
+    }
+
+    private void moveController() {
+        while (true) {
+            while (!StdDraw.hasNextKeyTyped()) {
+            }
+            if (move(StdDraw.nextKeyTyped())) {
+                while (!StdDraw.hasNextKeyTyped()) {
+                }
+                char input = StdDraw.nextKeyTyped();
+                if (input == 'q') {
+                    save();
+                    System.exit(0);
+                }
+                move(input);
+            }
+            drawGame();
+        }
+    }
+
+    private boolean load() {
+        File f = new File("./world.ser");
+        if (f.exists()) {
+            try {
+                FileInputStream fs = new FileInputStream(f);
+                ObjectInputStream os = new ObjectInputStream(fs);
+                Game game = (Game) os.readObject();
+                finalWorldFrame = game.finalWorldFrame;
+                player = game.player;
+                os.close();
+                return true;
+            } catch (FileNotFoundException e) {
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.exit(0);
+            } catch (ClassNotFoundException e) {
+                System.out.println("class not found");
+                System.exit(0);
+            }
+        }
+        StdDraw.clear(Color.BLACK);
+        StdDraw.setPenColor(Color.RED);
+        draw(MEDIUM, CENTERX, CENTERY, "File not found!!");
+        StdDraw.show();
+        StdDraw.pause(2000);
+        return false;
+    }
+
+    private void save() {
+        File f = new File("./world.ser");
+        try {
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            FileOutputStream fs = new FileOutputStream(f);
+            ObjectOutputStream os = new ObjectOutputStream(fs);
+            os.writeObject(this);
+            os.close();
+        }  catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println(e);
+            System.exit(0);
+        }
+    }
+
+    private String enterSeed(LinkedList<Character> seed, char input) {
+        if (input == 's' || input == 'S') {
+            return toString(seed);
+        }
+        StdDraw.clear(Color.BLACK);
+        StdDraw.setPenColor(Color.WHITE);
+
+        /* Draws necessary components to the screen. */
+        draw(MEDIUM, CENTERX, CENTERY + 2, "Please enter seed number, ending with \"s\":");
+        if (contain(input)) {
+            seed.addLast(input);
+        }
+        draw(SMALL, CENTERX, CENTERY - 2, toString(seed));
+        StdDraw.show();
+
+        while (!StdDraw.hasNextKeyTyped()) {
+        }
+        input = StdDraw.nextKeyTyped();
+        return enterSeed(seed, input);
+    }
+
+    private void drawGame() {
+        StdDraw.clear(Color.BLACK);
+        StdDraw.setPenColor(Color.WHITE);
+
+        // TODO: draw all relevant game information before rendering the frame.
+        TERenderer ter = new TERenderer();
+        ter.renderFrame(finalWorldFrame);
+    }
+
+    /**
+     * Given an array of characters, returns the corresponding String.
+     * @param seed an array of characters
+     * @return String of interest.
+     */
+    private String toString(LinkedList<Character> seed) {
+        String toString = "";
+        for (int i = 0; i < seed.size(); i += 1) {
+            toString = toString.concat(seed.get(i).toString());
+        }
+        return toString;
+    }
+
+    /**
+     *
+     * @param c a character which will be searched for.
+     * @return a boolean value.
+     */
+    private boolean contain(char c) {
+        for (char ch : NUMBERS) {
+            if (c == ch) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void draw(Font font, double x, double y, String text) {
+        StdDraw.setFont(font);
+        StdDraw.text(x, y, text);
     }
 
     /**
@@ -39,18 +229,27 @@ public class Game {
 
         if (inputArray.charAt(0) == 'n') {
             int endOfSeed = inputArray.indexOf('s');
-            finalWorldFrame = initializeGame(input.substring(1, endOfSeed));
+            finalWorldFrame = initializeGame(input.substring(1, endOfSeed), WIDTH, HEIGHT);
 
             char[] moves = inputArray.substring(endOfSeed + 1).toCharArray();
-            move(moves);
+            for (char eachMove : moves) {
+                move(eachMove);
+            }
         }
         return finalWorldFrame;
     }
 
-    private TETile[][] initializeGame(String string) {
-        finalWorldFrame = new TETile[WIDTH][HEIGHT];
-        for (int x = 0; x < WIDTH; x += 1) {
-            for (int y = 0; y < HEIGHT; y += 1) {
+    /**
+     * Given a string representing seed, initialize the world
+     *
+     * @param string seed for generating pseudorandom.
+     * @param width  of the world.
+     * @param height of the world.
+     */
+    private TETile[][] initializeGame(String string, int width, int height) {
+        finalWorldFrame = new TETile[width][height];
+        for (int x = 0; x < width; x += 1) {
+            for (int y = 0; y < height; y += 1) {
                 finalWorldFrame[x][y] = Tileset.NOTHING;
             }
         }
@@ -62,32 +261,36 @@ public class Game {
         Position[] position = new Position[1];
         position[0] = new Position(5, 15, 0);
         player = new Position(6, 15, 0);
-        /* Draws onto the final World Frame */
+        /* Draws onto the Final World Frame */
         drawRoom(random, finalWorldFrame, position);
-        /* Ensures that the 'initializing connecting door is filled by the wall */
+        /* Ensures that the 'initializing connecting door' is filled by the wall */
         finalWorldFrame[5][15] = Tileset.WALL;
         finalWorldFrame[6][15] = Tileset.PLAYER;
 
         return finalWorldFrame;
     }
 
-    private void move(char[] input) {
-        for (char c : input) {
-            if (c == 'w') {
+    /**
+     *
+     * @param input key pressed
+     * @return a boolean value representing whether it reached :Q or not.
+     */
+    private boolean move(char input) {
+            if (input == 'w') {
                 move(3);
-            } else if (c == 'a') {
+            } else if (input == 'a') {
                 move(2);
-            } else if (c == 's') {
+            } else if (input == 's') {
                 move(1);
-            } else if (c == 'd') {
+            } else if (input == 'd') {
                 move(0);
-            } else if (c == ':'){
+            } else if (input == ':') {
                 // save the game
-                return;
+                return true;
             }
-        }
+            return false;
     }
-    
+
     private void move(int direction) {
         int x = player.x;
         int y = player.y;
@@ -103,7 +306,7 @@ public class Game {
                 finalWorldFrame[x][y] = Tileset.FLOOR;
                 player.y = y - 1;
             }
-        } else if(direction == 2) {
+        } else if (direction == 2) {
             if (finalWorldFrame[x - 1][y].equals(Tileset.FLOOR)) {
                 finalWorldFrame[x - 1][y] = Tileset.PLAYER;
                 finalWorldFrame[x][y] = Tileset.FLOOR;
@@ -118,7 +321,7 @@ public class Game {
         }
     }
 
-    private class Position {
+    private class Position implements Serializable {
         private int x;
         private int y;
         private int direction;

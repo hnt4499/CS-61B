@@ -5,7 +5,6 @@ import edu.princeton.cs.introcs.StdDraw;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class MemoryGame {
     private int width;
@@ -38,7 +37,7 @@ public class MemoryGame {
         this.width = width;
         this.height = height;
         StdDraw.setCanvasSize(this.width * 16, this.height * 16);
-        font = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
+        font = new Font("Lucida Sans Regular", Font.PLAIN, 30);
         StdDraw.setFont(font);
         StdDraw.setXscale(0, this.width);
         StdDraw.setYscale(0, this.height);
@@ -58,7 +57,7 @@ public class MemoryGame {
 
     public void drawFrame(String s) {
         StdDraw.clear(Color.BLACK);
-        Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
+        Font font = new Font("Lucida Sans Regular", Font.PLAIN, 30);
         StdDraw.setFont(font);
         StdDraw.setPenColor(Color.WHITE);
 
